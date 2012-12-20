@@ -1,0 +1,15 @@
+syntax: regexp
+
+# Buildout ignores.
+^bin$
+^parts$
+^eggs$
+^develop-eggs$
+^downloads$
+^components$
+.installed.cfg
+
+syntax: glob
+
+*.pyc
+*.egg-info
