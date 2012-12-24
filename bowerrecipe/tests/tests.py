@@ -1,11 +1,11 @@
-import unittest
-import mock
-import zc.buildout
-import os.path
-import json
-import shutil
-
 from bowerrecipe import Recipe
+import json
+import mock
+import os.path
+import shutil
+import unittest
+import zc.buildout
+
 
 @mock.patch('subprocess.call')
 @mock.patch('os.chdir')
@@ -18,13 +18,12 @@ class RecipeTest(unittest.TestCase):
                              'parts-directory': self.parts_dir}}
 
     def tearDown(self):
-        shutil.rmtree(self.parts_dir, ignore_errors=True)
+        shutil.rmtree(self.base_dir, ignore_errors=True)
 
     def test_binary_should_default_to_bower_on_path(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
-        recipe = Recipe(self.buildout, 'bower', options)
+        Recipe(self.buildout, 'bower', options)
         self.assertEqual('bower', options['binary'])
-
 
     def test_at_least_one_package_should_be_specified(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe'}
@@ -62,7 +61,7 @@ class RecipeTest(unittest.TestCase):
 
     def test_downloads_default_to_sensible_location(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
-        recipe = Recipe(self.buildout, 'bower', options)
+        Recipe(self.buildout, 'bower', options)
         self.assertEqual('downloads', options['downloads'])
 
     def test_changes_to_correct_directory_pre_install(self, chdir, spcall):
@@ -72,6 +71,3 @@ class RecipeTest(unittest.TestCase):
         recipe.install()
 
         chdir.assert_called_with(self.base_dir)
-
-
-
