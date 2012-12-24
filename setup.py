@@ -27,7 +27,7 @@ long_description = (
 entry_point = 'bowerrecipe:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
 
-tests_require = ['zope.testing', 'zc.buildout']
+tests_require = ['zope.testing', 'zc.buildout', 'mock']
 
 setup(name='bowerrecipe',
       version=version,
