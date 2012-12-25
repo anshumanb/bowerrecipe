@@ -18,7 +18,7 @@ class RecipeTest(unittest.TestCase):
                              'parts-directory': self.parts_dir}}
 
     def tearDown(self):
-        shutil.rmtree(self.base_dir, ignore_errors=True)
+        shutil.rmtree(self.parts_dir, ignore_errors=True)
 
     def test_binary_should_default_to_bower_on_path(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
@@ -34,6 +34,17 @@ class RecipeTest(unittest.TestCase):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
         Recipe(self.buildout, 'bower', options)
         self.assertEqual(self.base_dir, options['base-directory'])
+
+    def test_bowerrc_file_should_reside_in_base_dir(self, chdir, spcall):
+        options = {'recipe': 'bowerrecipe',
+                   'base-directory': self.parts_dir,
+                   'packages': 'jquery'}
+        bowerrc = os.path.join(self.parts_dir, '.bowerrc')
+        recipe = Recipe(self.buildout, 'bower', options)
+
+        recipe.install()
+
+        self.assertTrue(os.path.exists(bowerrc))
 
     def test_bowerrc_file_should_be_configured(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}

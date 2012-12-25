@@ -27,14 +27,19 @@ class Recipe(object):
     def install(self):
         base_dir = self.options['base-directory']
         download_dir = self.options['downloads']
-        conf = os.path.join(base_dir, '.bowerrc')
-        os.makedirs(base_dir)
-        with open(conf, 'w') as f:
+        bowerrc = os.path.join(base_dir, '.bowerrc')
+
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+
+        with open(bowerrc, 'w') as f:
             json.dump({'directory': download_dir}, f)
+
         cmd = '{} install {}'.format(self.options['binary'],
                                      self.options['packages'])
         os.chdir(base_dir)
         subprocess.call(cmd, shell=True)
+
         return base_dir, os.path.normpath(os.path.join(base_dir, download_dir))
 
     def update(self):
