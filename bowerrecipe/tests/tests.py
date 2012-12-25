@@ -71,3 +71,22 @@ class RecipeTest(unittest.TestCase):
         recipe.install()
 
         chdir.assert_called_with(self.base_dir)
+
+    def test_multiple_packages_can_be_installed(self, chdir, spcall):
+        options = {'recipe': 'bowerrecipe', 'packages': 'jquery bootstrap'}
+        recipe = Recipe(self.buildout, 'bower', options)
+
+        recipe.install()
+
+        spcall.assert_called_with('bower install jquery bootstrap', shell=True)
+
+
+    def test_packages_can_be_specified_on_multiple_lines(self, chdir, spcall):
+        options = {'recipe': 'bowerrecipe',
+                   'packages': '\n  jquery#1.8.1  \n  underscore  '}
+        recipe = Recipe(self.buildout, 'bower', options)
+
+        recipe.install()
+
+        spcall.assert_called_with('bower install jquery#1.8.1 underscore',
+                                  shell=True)

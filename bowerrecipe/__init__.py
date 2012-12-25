@@ -9,13 +9,19 @@ import subprocess
 class Recipe(object):
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
-        self.base_dir = os.path.join(buildout['buildout']['parts-directory'],
-                                     'bower')
-        options.setdefault('binary', 'bower')
-        options.setdefault('downloads', 'downloads')
+
         if 'packages' not in options:
             raise zc.buildout.UserError('Missing packages option')
 
+        parts_dir = buildout['buildout']['parts-directory']
+        self.base_dir = os.path.join(parts_dir, 'bower')
+        options.setdefault('binary', 'bower')
+        options.setdefault('downloads', 'downloads')
+
+        # Remove unnecessary whitespace.
+        packages = [p.strip() for p in options['packages'].splitlines()
+                    if p.strip() != '']
+        options['packages'] = ' '.join(packages)
 
     def install(self):
         conf = os.path.join(self.base_dir, '.bowerrc')
