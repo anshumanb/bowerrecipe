@@ -3,6 +3,7 @@ import json
 import mock
 import os.path
 import shutil
+import tempfile
 import unittest
 import zc.buildout
 
@@ -12,7 +13,7 @@ import zc.buildout
 class RecipeTest(unittest.TestCase):
 
     def setUp(self):
-        self.parts_dir = os.path.abspath('parts')
+        self.parts_dir = tempfile.mkdtemp()
         self.base_dir = os.path.join(self.parts_dir, 'bower')
         self.buildout = {'buildout': {
                              'parts-directory': self.parts_dir}}
