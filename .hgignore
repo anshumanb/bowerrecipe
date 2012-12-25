@@ -7,6 +7,9 @@ syntax: regexp
 ^develop-eggs$
 ^downloads$
 ^components$
+^.project$
+^.pydevproject$
+^.settings$
 .installed.cfg
 
 syntax: glob
