@@ -3,64 +3,77 @@
 Introduction
 ============
 
+This recipe allows downloading and installing assets such as images, CSS and JavaScript using Twitter Bower.
+
 Supported options
 =================
 
 The recipe supports the following options:
 
-.. Note to recipe author!
-   ----------------------
-   For each option the recipe uses you should include a description
-   about the purpose of the option, the format and semantics of the
-   values it accepts, whether it is mandatory or optional and what the
-   default value is if it is omitted.
+packages
+    Packages that should be installed with bower. Packages specified here are
+    passed to bower verbatim. They can be specified in any form that is
+    supported by bower::
 
-option1
-    Description for ``option1``...
+        packages =
+            underscore
+            git://github.com/components/jquery.git
+            bootstrap#2.2.2
 
-option2
-    Description for ``option2``...
+base-directory
+    Absolute path to the bower "project" directory. ``bower install`` is run
+    from this directory and the bower configuration file, ``.bowerrc`` is
+    placed in this directory.  Optional; defaults to
+    ``${buildout:parts-directory}/bower``. Requires an absolute path.
+
+executable
+    Absolute path to the ``bower`` executable. Packages are installed using
+    this executable. Optional; defaults to ``bower`` on ``PATH``.
+
+downloads
+    Relative path, from the ``base-directory``, to the directory where bower
+    will download packages to. This path is written to the ``.bowerrc`` file
+    prior to running the executable. Optional; defaults to ``downloads``. Thus,
+    the downloaded packages are placed in ``${base-directory}/downloads`` by
+    default.
 
 
 Example usage
 =============
 
-.. Note to recipe author!
-   ----------------------
-   zc.buildout provides a nice testing environment which makes it
-   relatively easy to write doctests that both demonstrate the use of
-   the recipe and test it.
-   You can find examples of recipe doctests from the PyPI, e.g.
-   
-     http://pypi.python.org/pypi/zc.recipe.egg
+A sample buildout that uses this recipe could look like::
 
-   The PyPI page for zc.buildout contains documentation about the test
-   environment.
+    [buildout]
+    parts = node web
 
-     http://pypi.python.org/pypi/zc.buildout#testing-support
+    [node]
+    recipe = gp.recipe.node
+    url = http://nodejs.org/dist/v0.8.16/node-v0.8.16.tar.gz
+    npms = bower@0.6.8
+    scripts = bower
 
-   Below is a skeleton doctest that you can start with when building
-   your own tests.
+    [web]
+    recipe = bowerrecipe
+    packages = jquery#1.8.3 normalize-css
+    executable = ${buildout:bin-directory}/bower
 
-We'll start by creating a buildout that uses the recipe::
+This would place the downloaded packages in ``parts/bower/downloads``.
+Modifying the ``web`` section to be::
 
-    >>> write('buildout.cfg',
-    ... """
-    ... [buildout]
-    ... parts = test1
-    ...
-    ... [test1]
-    ... recipe = a.b.bowerrecipe
-    ... option1 = %(foo)s
-    ... option2 = %(bar)s
-    ... """ % { 'foo' : 'value1', 'bar' : 'value2'})
+    [web]
+    recipe = bowerrecipe
+    packages = jquery#1.8.3 normalize-css
+    executable = ${buildout:bin-directory}/bower
+    base-directory = ${buildout:parts-directory}
+    downloads = components
 
-Running the buildout gives us::
+would result in bower placing the downloaded packages in ``parts/components``.
 
-	>>> buildout_output_lower = system(buildout).lower()
-	>>> "installing test1" in buildout_output_lower
-	True
-	>>> "unused options for test1: 'option2' 'option1'" in buildout_output_lower
-	True
+Notes
+=====
 
+#. Bower still looks at the ``~/.bowerrc`` file. Hence, if this file exists, it
+   may affect the buildout bower configuration
+#. Bower still uses the cache located in the user's home directory. For me,
+   this happens to be ``~/.bower/cache/``
 
