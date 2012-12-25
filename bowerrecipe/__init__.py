@@ -16,7 +16,7 @@ class Recipe(object):
         parts_dir = buildout['buildout']['parts-directory']
         base_dir = os.path.join(parts_dir, 'bower')
         options.setdefault('base-directory', base_dir)
-        options.setdefault('binary', 'bower')
+        options.setdefault('executable', 'bower')
         options.setdefault('downloads', 'downloads')
 
         # Remove unnecessary whitespace.
@@ -35,7 +35,7 @@ class Recipe(object):
         with open(bowerrc, 'w') as f:
             json.dump({'directory': download_dir}, f)
 
-        cmd = '{} install {}'.format(self.options['binary'],
+        cmd = '{} install {}'.format(self.options['executable'],
                                      self.options['packages'])
         os.chdir(base_dir)
         subprocess.call(cmd, shell=True)

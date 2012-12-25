@@ -20,10 +20,10 @@ class RecipeTest(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.parts_dir, ignore_errors=True)
 
-    def test_binary_should_default_to_bower_on_path(self, chdir, spcall):
+    def test_exe_should_default_to_bower_on_path(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
         Recipe(self.buildout, 'bower', options)
-        self.assertEqual('bower', options['binary'])
+        self.assertEqual('bower', options['executable'])
 
     def test_at_least_one_package_should_be_specified(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe'}
@@ -72,7 +72,7 @@ class RecipeTest(unittest.TestCase):
     def test_install_should_call_bower_install(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe',
                    'packages': 'jquery',
-                   'binary': 'testbinary'}
+                   'executable': 'testbinary'}
         recipe = Recipe(self.buildout, 'bower', options)
 
         recipe.install()
@@ -99,7 +99,6 @@ class RecipeTest(unittest.TestCase):
         recipe.install()
 
         spcall.assert_called_with('bower install jquery bootstrap', shell=True)
-
 
     def test_packages_can_be_specified_on_multiple_lines(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe',
