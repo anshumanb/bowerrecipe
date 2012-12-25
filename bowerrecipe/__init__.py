@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import zc.buildout
-import os.path
-import os
 import json
+import os
+import os.path
 import subprocess
+import zc.buildout
 
 
 class Recipe(object):
