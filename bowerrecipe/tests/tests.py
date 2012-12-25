@@ -30,6 +30,11 @@ class RecipeTest(unittest.TestCase):
         self.assertRaises(zc.buildout.UserError, Recipe,
                           self.buildout, 'bower', options)
 
+    def test_base_directory_should_have_a_default(self, chdir, spcall):
+        options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
+        Recipe(self.buildout, 'bower', options)
+        self.assertEqual(self.base_dir, options['base-directory'])
+
     def test_bowerrc_file_should_be_configured(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
         recipe = Recipe(self.buildout, 'bower', options)
@@ -42,12 +47,16 @@ class RecipeTest(unittest.TestCase):
             config = json.dumps(json.load(f))
         self.assertEqual(expected, config)
 
-    def test_install_should_return_base_directory(self, chdir, spcall):
-        options = {'recipe': 'bowerrecipe', 'packages': 'jquery'}
+    def test_install_returns_base_and_downloads_dirs(self, chdir, spcall):
+        options = {'recipe': 'bowerrecipe',
+                   'packages': 'jquery',
+                   'downloads': '../downloads'}
         recipe = Recipe(self.buildout, 'bower', options)
 
-        base_path = recipe.install()
+        base_path, downloads_path = recipe.install()
         self.assertEqual(self.base_dir, base_path)
+        self.assertEqual(os.path.join(self.parts_dir, 'downloads'),
+                         downloads_path)
 
     def test_install_should_call_bower_install(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe',
