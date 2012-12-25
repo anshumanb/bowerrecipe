@@ -27,7 +27,7 @@ long_description = (
 entry_point = 'bowerrecipe:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
 
-tests_require = ['zope.testing', 'zc.buildout', 'mock']
+tests_require = ['zc.buildout', 'mock']
 
 setup(name='bowerrecipe',
       version=version,
@@ -44,16 +44,14 @@ setup(name='bowerrecipe',
       author='Anshuman Bhaduri',
       author_email='anshuman.bhaduri0@gmail.com',
       url='http://github.com/anshumanb/bowerrecipe',
-      license='mit',
+      license='MIT',
       packages=find_packages(exclude=['ez_setup']),
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
-                        'zc.buildout'
-                        # -*- Extra requirements: -*-
-                        ],
+                        'zc.buildout'],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
-      test_suite='bowerrecipe.tests.test_docs.test_suite',
+      test_suite='bowerrecipe.tests.tests',
       entry_points=entry_points,
       )
