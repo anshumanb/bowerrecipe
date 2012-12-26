@@ -37,6 +37,10 @@ setup(name='bowerrecipe',
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         'Framework :: Buildout',
+        'Framework :: Buildout :: Recipe',
+        'License :: OSI Approved :: MIT License',
+        'Development Status :: 4 - Beta',
+        'Operating System :: OS Independent',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
         ],

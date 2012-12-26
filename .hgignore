@@ -10,6 +10,7 @@ syntax: regexp
 ^.project$
 ^.pydevproject$
 ^.settings$
+^dist$
 .installed.cfg
 
 syntax: glob
