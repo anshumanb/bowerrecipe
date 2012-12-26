@@ -12,17 +12,14 @@ long_description = (
     read('README.rst')
     + '\n' +
     'Contributors\n'
-    '************\n'
+    '============\n'
     + '\n' +
     read('AUTHORS')
-    + '\n' +
-    'Change history\n'
-    '**************\n'
-    + '\n' +
+    + '\n\n' +
     read('CHANGES.rst')
-    + '\n' +
+    + '\n\n' +
    'Download\n'
-    '********\n')
+    '========\n')
 
 entry_point = 'bowerrecipe:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
