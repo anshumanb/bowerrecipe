@@ -66,7 +66,7 @@ class RecipeTest(unittest.TestCase):
         recipe = Recipe(self.buildout, 'bower', options)
 
         base_path, downloads_path = recipe.install()
-        self.assertEqual(self.base_dir, base_path)
+        self.assertEqual(os.path.join(self.base_dir, '.bowerrc'), base_path)
         self.assertEqual(os.path.join(self.parts_dir, 'downloads'),
                          downloads_path)
 

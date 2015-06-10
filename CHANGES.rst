@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.1.2 (unreleased)
+------------------
+
+- Fix removal of base directory upon uninstall. (#1)
+
+- Update files on every buildout run, rather loading them once.
+
 0.1.1
 -----
 
