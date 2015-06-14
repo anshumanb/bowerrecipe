@@ -25,6 +25,9 @@ class Recipe(object):
         options['packages'] = ' '.join(packages)
 
     def install(self):
+        return self.update()
+
+    def update(self):
         base_dir = self.options['base-directory']
         download_dir = self.options['downloads']
         bowerrc = os.path.join(base_dir, '.bowerrc')
@@ -40,7 +43,4 @@ class Recipe(object):
         os.chdir(base_dir)
         subprocess.call(cmd, shell=True)
 
-        return base_dir, os.path.normpath(os.path.join(base_dir, download_dir))
-
-    def update(self):
-        pass
+        return bowerrc, os.path.normpath(os.path.join(base_dir, download_dir))
