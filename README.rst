@@ -22,9 +22,11 @@ packages
 
 base-directory
     Absolute path to the bower "project" directory. ``bower install`` is run
-    from this directory and the bower configuration file, ``.bowerrc`` is
-    placed in this directory.  Optional; defaults to
-    ``${buildout:parts-directory}/bower``. Requires an absolute path.
+    from this directory and the bower configuration file, ``.bowerrc`` is also
+    placed here.  Optional; defaults to ``${buildout:parts-directory}/bower``.
+    Requires an absolute path.
+
+    This directory is not removed when the Buildout part is uninstalled.
 
 executable
     Absolute path to the ``bower`` executable. Packages are installed using
@@ -36,6 +38,8 @@ downloads
     prior to running the executable. Optional; defaults to ``downloads``. Thus,
     the downloaded packages are placed in ``${base-directory}/downloads`` by
     default.
+
+    This directory *is* removed when the Buildout part is uninstalled.
 
 
 Example usage

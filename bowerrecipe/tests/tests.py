@@ -59,7 +59,7 @@ class RecipeTest(unittest.TestCase):
             config = json.dumps(json.load(f))
         self.assertEqual(expected, config)
 
-    def test_install_returns_base_and_downloads_dirs(self, chdir, spcall):
+    def test_install_returns_bowerrc_and_downloads_dir(self, chdir, spcall):
         options = {'recipe': 'bowerrecipe',
                    'packages': 'jquery',
                    'downloads': '../downloads'}
