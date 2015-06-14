@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.1.2 (unreleased)
-------------------
+0.2
+-----
 
 - Fix removal of base directory upon uninstall. (#1)
 
